@@ -1,0 +1,23 @@
+node_modules/
+out/
+dist/
+dist-*/
+build/*.blockmap
+
+# Logs
+*.log
+*.out
+*.err
+smoke-result.txt
+
+# Lokale Artefakte
+*.backup
+*.lnk
+*.tsbuildinfo
+
+.DS_Store
+Thumbs.db
+
+# Local Netlify folder
+.netlify
+netlify-drop/

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAVIRO Hub – Update-Feed</title>
+<style>
+  :root { --bg: #0b0e14; --panel: #151a26; --border: rgba(124,92,255,.28); --accent: #7c5cff; --accent2: #22d3ee; --muted: #8b93ab; --text: #e8ecf6; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(1200px 600px at 50% -10%, rgba(124,92,255,.22), transparent 60%), var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; padding: 24px; }
+  .card { width: 100%; max-width: 620px; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 34px 36px; box-shadow: 0 24px 70px rgba(0,0,0,.45); }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+  .brand strong { font-size: 1.15rem; letter-spacing: .18em; }
+  .brand small { display: block; color: var(--muted); font-size: .62rem; letter-spacing: .3em; }
+  .dot { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, var(--accent), var(--accent2)); box-shadow: 0 0 22px rgba(124,92,255,.55); }
+  h1 { margin: 0 0 6px; font-size: 1.5rem; }
+  p.lead { margin: 0 0 24px; color: var(--muted); font-size: .92rem; line-height: 1.6; }
+  .ver { display: inline-block; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border); background: rgba(124,92,255,.12); font-size: .8rem; margin-bottom: 22px; }
+  ul { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 10px; }
+  a.file { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 13px 16px; border-radius: 11px; border: 1px solid var(--border); background: rgba(124,92,255,.07); color: var(--text); text-decoration: none; font-size: .88rem; transition: border-color .2s, background .2s; }
+  a.file:hover { border-color: var(--accent); background: rgba(124,92,255,.14); }
+  a.file span:last-child { color: var(--muted); font-size: .76rem; }
+  .note { margin: 0; padding-top: 18px; border-top: 1px solid var(--border); color: var(--muted); font-size: .8rem; line-height: 1.6; }
+  footer { margin-top: 22px; color: var(--muted); font-size: .74rem; }
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">
+      <div class="dot"></div>
+      <div><strong>ZAVIRO</strong><small>HUB</small></div>
+    </div>
+    <h1>Update-Feed</h1>
+    <p class="lead">Dies ist der maschinenlesbare Update-Server f&uuml;r <b>ZAVIRO Hub</b>. Die App fragt diese Adresse beim Start automatisch ab, um nach neuen Versionen zu suchen.</p>
+    <div class="ver">Aktuelle Version: <b id="v">__VERSION__</b></div>
+    <ul>
+      <li><a class="file" href="latest.yml"><span>latest.yml</span><span>Update-Metadaten</span></a></li>
+      <li><a class="file" href="__INSTALLER__"><span>__INSTALLER__</span><span>Installer</span></a></li>
+      <li><a class="file" href="__INSTALLER__.blockmap"><span>__INSTALLER__.blockmap</span><span>Blockmap</span></a></li>
+    </ul>
+    <p class="note">Der Button <b>&bdquo;Nach Updates suchen&ldquo;</b> in den Einstellungen von ZAVIRO Hub nutzt genau diese Dateien. Die Installation l&auml;uft anschlie&szlig;end &uuml;ber den Windows-Installer und startet die App neu.</p>
+    <footer>ZAVIRO Hub &middot; propriet&auml;re Software &middot; <a href="https://zaviro-cleaner.netlify.app" style="color:var(--accent2)">zaviro-cleaner.netlify.app</a></footer>
+  </main>
+</body>
+</html>
