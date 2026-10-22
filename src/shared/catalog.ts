@@ -27,6 +27,32 @@ export const PRODUCTS: ProductDefinition[] = [
     ],
     changelog: [
       {
+        version: '1.1.2',
+        date: '2026-10-22',
+        notes: [
+          '📦 Veröffentlichung läuft jetzt automatisch über GitHub Releases + Pages',
+          '🛟 Netlify bleibt als Fallback-Feed erhalten',
+          '🧾 Release-Skript prüft beide Feeds inkl. Prüfsumme'
+        ]
+      },
+      {
+        version: '1.1.1',
+        date: '2026-10-22',
+        notes: [
+          '🧪 Update-Kette geprüft: suchen → laden → installieren → neu starten',
+          '🌐 Primärer Update-Feed jetzt auf GitHub Pages (unabhängig von Netlify-Kontolimits)'
+        ]
+      },
+      {
+        version: '1.1.0',
+        date: '2026-10-22',
+        notes: [
+          '🌐 Update-Feed jetzt über GitHub Pages (Netlify bleibt als Backup)',
+          '🔁 Automatischer Fallback auf den zweiten Feed',
+          '🐛 Umlaute in Fehlermeldungen korrekt dargestellt'
+        ]
+      },
+      {
         version: '1.0.0',
         date: '2026-10-22',
         notes: [

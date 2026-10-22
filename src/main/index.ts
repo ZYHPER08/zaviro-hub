@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Menu, nativeImage, shell } from 'electron'
 import { join } from 'path'
 import { existsSync } from 'fs'
+import type { UpdateInfo } from '@shared/types'
 import { initIpc, initUpdaterEvents } from './ipc'
 import { logErr } from './log'
 import { configureAutoUpdate } from './services/updater'
@@ -131,14 +132,14 @@ if (!isPrimaryInstance) {
 
             const { checkForUpdates } = await import('./services/updater')
             console.log('SELFTEST selfupdate: Pruefung startet ...')
-            const upd = await Promise.race([
+            const timeoutResult: UpdateInfo = {
+              checked: false,
+              currentVersion: 'timeout',
+              error: 'Zeitueberschreitung'
+            }
+            const upd = await Promise.race<UpdateInfo>([
               checkForUpdates(),
-              new Promise<{ checked: boolean; currentVersion: string; error: string }>((resolve) =>
-                setTimeout(
-                  () => resolve({ checked: false, currentVersion: 'timeout', error: 'Zeitueberschreitung' }),
-                  20000
-                )
-              )
+              new Promise<UpdateInfo>((resolve) => setTimeout(() => resolve(timeoutResult), 20000))
             ])
             console.log(
               'SELFTEST selfupdate:',

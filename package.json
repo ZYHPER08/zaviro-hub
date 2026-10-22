@@ -1,66 +1,66 @@
 {
-  "name": "zaviro-hub",
-  "productName": "ZAVIRO Hub",
-  "version": "1.0.0",
-  "description": "ZAVIRO Hub: Übersicht über alle ZAVIRO-Tools, Updates, Changelogs und Installer in einer Oberfläche",
-  "main": "./out/main/index.js",
-  "author": "ZAVIRO",
-  "license": "UNLICENSED",
-  "scripts": {
-    "dev": "electron-vite dev",
-    "build": "electron-vite build",
-    "preview": "electron-vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
-    "pack": "electron-vite build && electron-builder --dir",
-    "dist": "electron-vite build && electron-builder",
-    "publish": "powershell -NoProfile -ExecutionPolicy Bypass -File ./publish-updates.ps1"
-  },
-  "dependencies": {
-    "electron-updater": "^6.8.9",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
-    "@types/node": "^22.10.0",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.3.4",
-    "electron": "^33.2.0",
-    "electron-builder": "^25.1.8",
-    "electron-vite": "^3.1.0",
-    "typescript": "^5.7.2",
-    "vite": "^6.0.3"
-  },
-  "build": {
-    "appId": "com.zaviro.hub",
-    "productName": "ZAVIRO Hub",
-    "files": [
-      "out/**/*",
-      "logo.png",
-      "build/icon.ico",
-      "build/icon.png"
-    ],
-    "win": {
-      "target": [
-        "portable",
-        "nsis"
-      ],
-      "icon": "build/icon.ico"
-    },
-    "publish": {
-      "provider": "generic",
-      "url": "https://zaviro-hub-update.netlify.app/"
-    },
-    "nsis": {
-      "oneClick": false,
-      "perMachine": false,
-      "allowElevation": false,
-      "include": "build/installer.nsh",
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "ZAVIRO Hub",
-      "uninstallDisplayName": "ZAVIRO Hub"
-    }
-  }
+    "name":  "zaviro-hub",
+    "productName":  "ZAVIRO Hub",
+    "version":  "1.1.2",
+    "description":  "ZAVIRO Hub: Übersicht über alle ZAVIRO-Tools, Updates, Changelogs und Installer in einer Oberfläche",
+    "main":  "./out/main/index.js",
+    "author":  "ZAVIRO",
+    "license":  "UNLICENSED",
+    "scripts":  {
+                    "dev":  "electron-vite dev",
+                    "build":  "electron-vite build",
+                    "preview":  "electron-vite preview",
+                    "typecheck":  "tsc --noEmit -p tsconfig.node.json \u0026\u0026 tsc --noEmit -p tsconfig.web.json",
+                    "pack":  "electron-vite build \u0026\u0026 electron-builder --dir",
+                    "dist":  "electron-vite build \u0026\u0026 electron-builder",
+                    "publish":  "powershell -NoProfile -ExecutionPolicy Bypass -File ./publish-updates.ps1"
+                },
+    "dependencies":  {
+                         "electron-updater":  "^6.8.9",
+                         "react":  "^18.3.1",
+                         "react-dom":  "^18.3.1"
+                     },
+    "devDependencies":  {
+                            "@types/node":  "^22.10.0",
+                            "@types/react":  "^18.3.12",
+                            "@types/react-dom":  "^18.3.1",
+                            "@vitejs/plugin-react":  "^4.3.4",
+                            "electron":  "^33.2.0",
+                            "electron-builder":  "^25.1.8",
+                            "electron-vite":  "^3.1.0",
+                            "typescript":  "^5.7.2",
+                            "vite":  "^6.0.3"
+                        },
+    "build":  {
+                  "appId":  "com.zaviro.hub",
+                  "productName":  "ZAVIRO Hub",
+                  "files":  [
+                                "out/**/*",
+                                "logo.png",
+                                "build/icon.ico",
+                                "build/icon.png"
+                            ],
+                  "win":  {
+                              "target":  [
+                                             "portable",
+                                             "nsis"
+                                         ],
+                              "icon":  "build/icon.ico"
+                          },
+                  "publish":  {
+                                  "provider":  "generic",
+                                  "url":  "https://zaviro-hub-update.netlify.app/"
+                              },
+                  "nsis":  {
+                               "oneClick":  false,
+                               "perMachine":  false,
+                               "allowElevation":  false,
+                               "include":  "build/installer.nsh",
+                               "allowToChangeInstallationDirectory":  true,
+                               "createDesktopShortcut":  true,
+                               "createStartMenuShortcut":  true,
+                               "shortcutName":  "ZAVIRO Hub",
+                               "uninstallDisplayName":  "ZAVIRO Hub"
+                           }
+              }
 }

@@ -1,4 +1,4 @@
-﻿import os from 'os'
+import os from 'os'
 import { execFileSync, spawn } from 'child_process'
 import { app } from 'electron'
 import { appVersion } from '../version'
@@ -31,12 +31,12 @@ export function getSystemInfo(): SystemInfo {
  * Startet den Hub mit Administratorrechten neu (UAC-Prompt).
  *
  * Ablauf: Ein detached PowerShell-Prozess wartet, bis die aktuelle Instanz
- * beendet ist, und startet erst dann die neue Instanz elevated â€“ sonst
+ * beendet ist, und startet erst dann die neue Instanz elevated – sonst
  * kollidiert der Single-Instance-Lock.
  */
 export async function relaunchAsAdmin(): Promise<{ ok: boolean; error?: string }> {
-  if (process.platform !== 'win32') return { ok: false, error: 'Nur unter Windows verfÃ¼gbar.' }
-  if (isElevated()) return { ok: false, error: 'Bereits als Administrator ausgefÃ¼hrt.' }
+  if (process.platform !== 'win32') return { ok: false, error: 'Nur unter Windows verfügbar.' }
+  if (isElevated()) return { ok: false, error: 'Bereits als Administrator ausgeführt.' }
 
   try {
     const exePath = app.getPath('exe')

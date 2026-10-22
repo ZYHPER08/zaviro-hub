@@ -1,4 +1,4 @@
-﻿import { execFile } from 'child_process'
+import { execFile } from 'child_process'
 import { promisify } from 'util'
 import { homedir } from 'os'
 import { join } from 'path'
@@ -10,7 +10,7 @@ import { logErr } from '../log'
 
 const execFileAsync = promisify(execFile)
 
-/** %LOCALAPPDATA% â€“ Electron kennt den Ordner nicht direkt. */
+/** %LOCALAPPDATA% – Electron kennt den Ordner nicht direkt. */
 function localAppData(): string {
   return process.env['LOCALAPPDATA'] ?? join(homedir(), 'AppData', 'Local')
 }
@@ -20,7 +20,7 @@ interface UninstallEntry {
   DisplayVersion: string
 }
 
-/** Ein einziger PowerShell-Aufruf liefert alle Uninstall-EintrÃ¤ge (HKCU + HKLM + WOW). */
+/** Ein einziger PowerShell-Aufruf liefert alle Uninstall-Einträge (HKCU + HKLM + WOW). */
 const PS_SCRIPT = String.raw`
 $roots = @(
   'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*',
@@ -96,7 +96,7 @@ export async function detectProduct(product: ProductDefinition, force = false): 
     runtime.installed = true
     runtime.installedVersion = entry.DisplayVersion || undefined
   } else if (exePath) {
-    // Registry-Eintrag fehlt (z. B. portable Installation) â€“ Datei existiert aber.
+    // Registry-Eintrag fehlt (z. B. portable Installation) – Datei existiert aber.
     runtime.installed = true
   }
 

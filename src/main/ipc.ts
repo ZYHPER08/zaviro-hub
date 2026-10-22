@@ -1,4 +1,4 @@
-﻿import { BrowserWindow, ipcMain, shell } from 'electron'
+import { BrowserWindow, ipcMain, shell } from 'electron'
 import { app } from 'electron'
 import { appVersion } from './version'
 import type {
@@ -103,7 +103,7 @@ export function initIpc(): void {
     const product = getProduct(productId)
     if (!product) return { ok: false, productId, error: 'Unbekanntes Produkt.' }
     if (!product.feedUrl) {
-      return { ok: false, productId, error: 'FÃ¼r dieses Produkt gibt es noch keinen Installer.' }
+      return { ok: false, productId, error: 'Für dieses Produkt gibt es noch keinen Installer.' }
     }
     if (product.state !== 'released') {
       return { ok: false, productId, error: 'Dieses Produkt ist noch in Entwicklung.' }
@@ -145,7 +145,7 @@ export function initIpc(): void {
         receivedBytes: download.bytes,
         totalBytes: download.bytes,
         percent: 100,
-        message: 'IntegritÃ¤t geprÃ¼ft â€“ Installer wird gestartet'
+        message: 'Integrität geprüft – Installer wird gestartet'
       })
 
       sendProgress(window, {

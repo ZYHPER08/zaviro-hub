@@ -3,16 +3,16 @@ import { autoUpdater } from 'electron-updater'
 import type { UpdateInfo } from '@shared/types'
 import { logErr } from '../log'
 
-// Selbst-Update über einen generischen Feed:
-//   https://zaviro-hub-update.netlify.app/latest.yml
-//   https://zaviro-hub-update.netlify.app/ZAVIRO Hub Setup X.Y.Z.exe
-const FEED_URL = 'https://zaviro-hub-update.netlify.app/'
+// Selbst-Update über einen generischen Feed.
+// Primär: GitHub Pages (unabhängig von Netlify-Kontolimits), Fallback: Netlify.
+const FEED_URLS = ['https://zyhper08.github.io/zaviro-hub-feed/', 'https://zaviro-hub-update.netlify.app/']
 
 type ProgressFn = (info: UpdateInfo) => void
 type AvailableFn = (info: UpdateInfo) => void
 
 let progressListener: ProgressFn | null = null
 let availableListener: AvailableFn | null = null
+let activeFeedIndex = 0
 
 function parse(v: string): number[] {
   return v.split('.').map((n) => Number.parseInt(n, 10) || 0)
@@ -28,7 +28,7 @@ export function configureAutoUpdate(): void {
   autoUpdater.autoDownload = false
   autoUpdater.autoInstallOnAppQuit = true
   autoUpdater.logger = null
-  autoUpdater.setFeedURL({ provider: 'generic', url: FEED_URL })
+  autoUpdater.setFeedURL({ provider: 'generic', url: FEED_URLS[activeFeedIndex] })
 }
 
 export function onUpdateProgress(fn: ProgressFn): void {
@@ -55,24 +55,31 @@ export function scheduleStartupUpdateCheck(delayMs = 5000): void {
 
 export async function checkForUpdates(): Promise<UpdateInfo> {
   const currentVersion = app.getVersion()
-  try {
-    const result = await autoUpdater.checkForUpdates()
-    const latest = result?.updateInfo.version
-    return {
-      checked: true,
-      currentVersion,
-      latestVersion: latest,
-      updateAvailable: Boolean(latest) && isNewer(latest as string, currentVersion),
-      notes:
-        typeof result?.updateInfo.releaseNotes === 'string' ? result.updateInfo.releaseNotes : undefined
+  let lastError: unknown = null
+  for (let attempt = 0; attempt < FEED_URLS.length; attempt++) {
+    const index = (activeFeedIndex + attempt) % FEED_URLS.length
+    try {
+      autoUpdater.setFeedURL({ provider: 'generic', url: FEED_URLS[index] })
+      const result = await autoUpdater.checkForUpdates()
+      const latest = result?.updateInfo.version
+      activeFeedIndex = index
+      return {
+        checked: true,
+        currentVersion,
+        latestVersion: latest,
+        updateAvailable: Boolean(latest) && isNewer(latest as string, currentVersion),
+        notes:
+          typeof result?.updateInfo.releaseNotes === 'string' ? result.updateInfo.releaseNotes : undefined
+      }
+    } catch (error) {
+      lastError = error
+      logErr(`update:check:${FEED_URLS[index]}`, error)
     }
-  } catch (error) {
-    logErr('update:check', error)
-    return {
-      checked: true,
-      currentVersion,
-      error: error instanceof Error ? error.message : String(error)
-    }
+  }
+  return {
+    checked: true,
+    currentVersion,
+    error: lastError instanceof Error ? lastError.message : String(lastError)
   }
 }
 
