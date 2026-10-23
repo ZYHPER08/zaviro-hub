@@ -27,6 +27,15 @@ export const PRODUCTS: ProductDefinition[] = [
     ],
     changelog: [
       {
+        version: '1.1.3',
+        date: '2026-10-23',
+        notes: [
+          '🌐 Cleaner- und Launcher-Feed liegen jetzt ebenfalls auf GitHub Pages',
+          '📦 Katalog kennt die neuen Download- und Update-Adressen',
+          '🛟 Netlify bleibt als Fallback-Feed erhalten'
+        ]
+      },
+      {
         version: '1.1.2',
         date: '2026-10-22',
         notes: [
@@ -74,7 +83,7 @@ export const PRODUCTS: ProductDefinition[] = [
     icon: '🎮',
     accent: '#22d3ee',
     homepage: 'https://zaviro-478.netlify.app',
-    feedUrl: 'https://zaviro-update.netlify.app/',
+    feedUrl: 'https://zyhper08.github.io/zaviro-launcher-feed/',
     registryName: 'ZAVIRO Gaming Launcher',
     programFolder: 'ZAVIRO',
     exeName: 'ZAVIRO.exe',
@@ -87,6 +96,14 @@ export const PRODUCTS: ProductDefinition[] = [
       'Freunde-Chat & Cloud-Sync'
     ],
     changelog: [
+      {
+        version: '1.5.2',
+        date: '2026-10-23',
+        notes: [
+          '🌐 Auto-Update läuft jetzt ueber GitHub Pages statt Netlify',
+          '🔁 Netlify bleibt als zweiter Feed im Hintergrund'
+        ]
+      },
       {
         version: '1.5.1',
         date: '2026-10-21',
@@ -152,7 +169,7 @@ export const PRODUCTS: ProductDefinition[] = [
     icon: '🧹',
     accent: '#3ddc97',
     homepage: 'https://zaviro-cleaner.netlify.app',
-    feedUrl: 'https://zaviro-cleaner-update.netlify.app/',
+    feedUrl: 'https://zyhper08.github.io/zaviro-cleaner-feed/',
     registryName: 'ZAVIRO Cleaner',
     programFolder: 'ZAVIRO Cleaner',
     exeName: 'ZAVIRO Cleaner.exe',
@@ -166,6 +183,14 @@ export const PRODUCTS: ProductDefinition[] = [
       'Treiber-Prüfung & Selbst-Update'
     ],
     changelog: [
+      {
+        version: '1.2.1',
+        date: '2026-10-23',
+        notes: [
+          '🌐 Auto-Update läuft jetzt ueber GitHub Pages statt Netlify',
+          '⬇️ Website-Download zeigt direkt auf das GitHub-Release'
+        ]
+      },
       {
         version: '1.2.0',
         date: '2026-10-22',

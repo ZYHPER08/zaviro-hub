@@ -1,7 +1,7 @@
 {
     "name":  "zaviro-hub",
     "productName":  "ZAVIRO Hub",
-    "version":  "1.1.2",
+    "version":  "1.1.3",
     "description":  "ZAVIRO Hub: Übersicht über alle ZAVIRO-Tools, Updates, Changelogs und Installer in einer Oberfläche",
     "main":  "./out/main/index.js",
     "author":  "ZAVIRO",
@@ -49,7 +49,7 @@
                           },
                   "publish":  {
                                   "provider":  "generic",
-                                  "url":  "https://zaviro-hub-update.netlify.app/"
+                                  "url":  "https://zyhper08.github.io/zaviro-hub-feed/"
                               },
                   "nsis":  {
                                "oneClick":  false,
