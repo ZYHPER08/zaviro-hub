@@ -11,7 +11,7 @@
 # das Repo ZYHPER08/zaviro-hub-feed aktiv (Pfad /docs).
 $ErrorActionPreference = 'Stop'
 
-$hubDir   = 'E:\ZAVIRO Hub'
+$hubDir   = 'E:\ZAVIRO\ZAVIRO Hub'
 $dropDir  = Join-Path $hubDir 'netlify-drop'
 $feedRepo = 'ZYHPER08/zaviro-hub-feed'
 $pagesUrl = 'https://zyhper08.github.io/zaviro-hub-feed/'
