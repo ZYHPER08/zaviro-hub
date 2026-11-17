@@ -19,8 +19,16 @@ export default function Updates(): JSX.Element {
     try {
       const result = await window.api.update.check()
       setInfo(result)
+      if (result.error) {
+        notify(`${t('updates.error')} ${result.error}`, 'err')
+        return
+      }
       if (result.updateAvailable) {
         notify(t('overview.selfUpdateAvailable', { version: result.latestVersion ?? '' }), 'info')
+        const downloaded = await window.api.update.download()
+        setInfo(downloaded)
+        if (downloaded.error) notify(`${t('updates.error')} ${downloaded.error}`, 'err')
+        else if (downloaded.readyToInstall) notify(t('toast.updateDone'), 'ok')
       } else {
         notify(t('updates.current'), 'ok')
       }

@@ -1,6 +1,6 @@
 import { createHash } from 'crypto'
 import { createWriteStream, existsSync, mkdirSync, rmSync, statSync } from 'fs'
-import { join } from 'path'
+import { basename, join } from 'path'
 import { Readable } from 'stream'
 import { pipeline } from 'stream/promises'
 import { app } from 'electron'
@@ -36,7 +36,18 @@ export async function downloadInstaller(
 ): Promise<DownloadResult> {
   const url = feedFileUrl(feedUrl, feed.path)
   const dir = downloadDirectory()
-  const filePath = join(dir, feed.path)
+  const fileName = (() => {
+    if (feed.path.startsWith('http://') || feed.path.startsWith('https://')) {
+      try {
+        const u = new URL(feed.path)
+        const n = basename(u.pathname)
+        if (n) return decodeURIComponent(n)
+      } catch {}
+    }
+    const n = basename(feed.path)
+    return n || 'installer.exe'
+  })()
+  const filePath = join(dir, fileName)
 
   const controller = new AbortController()
   const response = await fetch(url, { signal: controller.signal })

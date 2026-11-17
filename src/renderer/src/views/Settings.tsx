@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { useApp } from '../context'
 import { t } from '../lib/i18n'
 
 export default function Settings(): JSX.Element {
   const { settings, setSettings, system, notify } = useApp()
+  const [checking, setChecking] = useState(false)
 
   if (!settings) return <div className="empty"><span className="spin" />Laden …</div>
 
@@ -13,6 +15,21 @@ export default function Settings(): JSX.Element {
   const relaunchAsAdmin = async (): Promise<void> => {
     const result = await window.api.system.relaunchAsAdmin()
     if (!result.ok && result.error) notify(result.error, 'err')
+  }
+
+  const checkUpdates = async (): Promise<void> => {
+    setChecking(true)
+    try {
+      const result = await window.api.update.check()
+      if (result.error) notify(`${t('updates.error')} ${result.error}`, 'err')
+      else if (result.updateAvailable)
+        notify(t('overview.selfUpdateAvailable', { version: result.latestVersion ?? '' }), 'info')
+      else notify(t('updates.current'), 'ok')
+    } catch (error) {
+      notify(t('toast.error', { message: String(error) }), 'err')
+    } finally {
+      setChecking(false)
+    }
   }
 
   return (
@@ -76,6 +93,11 @@ export default function Settings(): JSX.Element {
           {t('settings.autoCheck')}
         </label>
         <p className="muted small">{t('settings.autoCheckHint')}</p>
+        <div className="banner-actions">
+          <button className="btn sm" onClick={() => void checkUpdates()} disabled={checking}>
+            {checking ? t('updates.checking') : t('updates.check')}
+          </button>
+        </div>
       </section>
 
       <section className="panel">
@@ -108,13 +130,13 @@ export default function Settings(): JSX.Element {
           <strong>
             <a
               className="link"
-              href="mailto:zaviro.official0@gmail.com"
+              href="mailto:zaviro.entertainment@outlook.de"
               onClick={(event) => {
                 event.preventDefault()
-                void window.api.hub.openExternal('mailto:zaviro.official0@gmail.com')
+                void window.api.hub.openExternal('mailto:zaviro.entertainment@outlook.de')
               }}
             >
-              zaviro.official0@gmail.com
+              zaviro.entertainment@outlook.de
             </a>
           </strong>
         </div>
@@ -123,9 +145,9 @@ export default function Settings(): JSX.Element {
           <strong>
             <button
               className="link"
-              onClick={() => void window.api.hub.openExternal('https://zaviro-cleaner.netlify.app')}
+              onClick={() => void window.api.hub.openExternal('https://zaviro-cleaner.vercel.app')}
             >
-              zaviro-cleaner.netlify.app
+              zaviro-cleaner.vercel.app
             </button>
           </strong>
         </div>

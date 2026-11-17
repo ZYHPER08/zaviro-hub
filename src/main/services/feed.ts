@@ -67,5 +67,8 @@ export async function fetchFeed(feedUrl: string, timeoutMs = 15000): Promise<Fee
 
 /** Vollständige Download-URL einer Datei im Feed. */
 export function feedFileUrl(feedUrl: string, filePath: string): string {
+  if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
+    return filePath
+  }
   return new URL(filePath, baseUrl(feedUrl)).toString()
 }
