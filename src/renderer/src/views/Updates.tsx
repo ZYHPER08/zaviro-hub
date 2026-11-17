@@ -10,8 +10,14 @@ export default function Updates(): JSX.Element {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
 
   useEffect(() => {
-    const off = window.api.update.onAvailable((value) => setInfo(value))
-    return off
+    const offAvailable = window.api.update.onAvailable((value) => setInfo(value))
+    const offProgress = window.api.update.onProgress((value) => {
+      setInfo((prev) => ({ ...(prev ?? { checked: true, currentVersion: '' }), ...value }))
+    })
+    return () => {
+      offAvailable()
+      offProgress()
+    }
   }, [])
 
   const check = async (): Promise<void> => {
@@ -76,7 +82,7 @@ export default function Updates(): JSX.Element {
             </button>
             {info?.updateAvailable && !info.readyToInstall && (
               <button className="btn primary sm" onClick={() => void download()} disabled={busy}>
-                {t('overview.selfUpdateDownload')}
+                {`${t('overview.selfUpdateDownload')} ${info?.downloadPercent ?? 0}%`}
               </button>
             )}
             {info?.readyToInstall && (
@@ -87,9 +93,12 @@ export default function Updates(): JSX.Element {
           </div>
         </div>
         {info?.downloadPercent !== undefined && !info.readyToInstall && (
-          <div className="progress-bar">
-            <div className="progress-fill" style={{ width: `${info.downloadPercent}%` }} />
-          </div>
+          <>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{ width: `${info.downloadPercent}%` }} />
+            </div>
+            <p className="muted small">{info.downloadPercent}% …</p>
+          </>
         )}
         {info?.error && <p className="warn-text">{info.error}</p>}
       </section>
