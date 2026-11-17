@@ -71,8 +71,8 @@ export default function Updates(): JSX.Element {
           <div>
             <h3>{t('overview.selfUpdate')}</h3>
             <p className="muted small">
-              {info?.latestVersion
-                ? t('overview.selfUpdateAvailable', { version: info.latestVersion })
+              {info?.updateAvailable && !info.readyToInstall
+                ? t('overview.selfUpdateAvailable', { version: info.latestVersion ?? '' })
                 : t('overview.selfUpdateCurrent')}
             </p>
           </div>
