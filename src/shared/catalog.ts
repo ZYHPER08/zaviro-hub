@@ -31,6 +31,14 @@ export const PRODUCTS: ProductDefinition[] = [
     tags: ['store', 'update', 'zentrale', 'installer'],
     changelog: [
       {
+        version: '1.1.9',
+        date: '2026-11-19',
+        notes: [
+          '🐛 Installer startet jetzt zuverlässig – Fallback über die Windows-Shell bei NSIS-Absturz',
+          '🔧 Fehlerhafte Meldung „Installer wurde geschlossen" bei sofortigem Installer-Exit behoben'
+        ]
+      },
+      {
         version: '1.1.8',
         date: '2026-11-19',
         notes: [

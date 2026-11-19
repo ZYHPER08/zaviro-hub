@@ -1,5 +1,6 @@
 import { spawn } from 'child_process'
 import type { ChildProcess } from 'child_process'
+import { shell } from 'electron'
 import type { ProductDefinition } from '@shared/types'
 import { detectProduct, invalidateRegistryCache } from './installed'
 import { logErr, logInfo } from '../log'
@@ -40,6 +41,7 @@ export async function runInstaller(
   }
 
   let installerExited = false
+  let shellRetryUsed = false
   child.on('exit', () => {
     installerExited = true
   })
@@ -77,6 +79,22 @@ export async function runInstaller(
           message: `${product.name} ${after.installedVersion} installiert`
         }
       }
+
+      // Manche NSIS-Installer beenden sich beim Start über spawn() sofort mit
+      // einem System.dll-Fehler, laufen aber über die Windows-Shell einwandfrei.
+      // Einmal mit ShellExecute neu starten, bevor wir Scheitern melden.
+      if (!shellRetryUsed) {
+        shellRetryUsed = true
+        installerExited = false
+        const shellError = await shell.openPath(filePath)
+        if (shellError) {
+          logErr('installer:shellRetry', shellError)
+        } else {
+          logInfo('installer', `Installer via Shell neu gestartet: ${filePath}`)
+          continue
+        }
+      }
+
       return {
         started: true,
         message:

@@ -1,7 +1,7 @@
 {
     "name":  "zaviro-hub",
     "productName":  "ZAVIRO Hub",
-    "version": "1.1.8",
+    "version": "1.1.9",
     "description":  "ZAVIRO Hub: ÃƒÅ“bersicht ÃƒÂ¼ber alle ZAVIRO-Tools, Updates, Changelogs und Installer in einer OberflÃƒÂ¤che",
     "main":  "./out/main/index.js",
     "author":  "ZAVIRO",
