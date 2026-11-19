@@ -58,9 +58,14 @@ foreach ($f in @($installer, $portable, $blockmap, $latest)) {
   if (-not (Test-Path $f)) { throw "Build-Artefakt fehlt: $f" }
 }
 
-$latestText = Get-Content $latest -Raw -Encoding UTF8
-$sha512 = ([regex]::Match($latestText, 'sha512:\s*(\S+)')).Groups[1].Value
-$size   = ([regex]::Match($latestText, 'size:\s*(\d+)')).Groups[1].Value
+# Wichtig: Die Pruefsumme aus der WIRKLICHEN Installer-Datei berechnen.
+# electron-builder schreibt in dist/latest.yml gelegentlich eine abweichende
+# sha512; ausserdem vergleicht electron-updater_hex-Strings case-sensitiv
+# (digest('hex') liefert Kleinbuchstaben). Deshalb: kleingeschriebener Hex-String
+# direkt aus der EXE - sonst bricht das Update mit "sha512 checksum mismatch".
+$shaBytes = [System.Security.Cryptography.SHA512]::Create().ComputeHash([System.IO.File]::ReadAllBytes($installer))
+$sha512 = -join ($shaBytes | ForEach-Object { $_.ToString('x2') })
+$size   = [string](Get-Item $installer).Length
 
 # --- 3. GitHub-Release anlegen/ersetzen ---
 Write-Step "Veroeffentliche Release v$version im Repo $feedRepo ..."
