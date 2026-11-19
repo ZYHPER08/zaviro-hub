@@ -4,13 +4,15 @@ import { t } from './lib/i18n'
 import logoUrl from './assets/logo.png'
 
 const Overview = lazy(() => import('./views/Overview'))
+const Store = lazy(() => import('./views/Store'))
 const Updates = lazy(() => import('./views/Updates'))
 const Settings = lazy(() => import('./views/Settings'))
 
-export type NavKey = 'overview' | 'updates' | 'settings'
+export type NavKey = 'overview' | 'store' | 'updates' | 'settings'
 
 const NAV: { key: NavKey; icon: string; label: string }[] = [
   { key: 'overview', icon: '◈', label: 'nav.overview' },
+  { key: 'store', icon: '▦', label: 'nav.store' },
   { key: 'updates', icon: '↻', label: 'nav.updates' },
   { key: 'settings', icon: '⚙', label: 'nav.settings' }
 ]
@@ -55,14 +57,21 @@ function Sidebar({ active, onChange }: { active: NavKey; onChange: (k: NavKey) =
 function Shell(): JSX.Element {
   const { toasts } = useApp()
   const [view, setView] = useState<NavKey>('overview')
+  const [changelogProduct, setChangelogProduct] = useState<string | undefined>(undefined)
+
+  const openChangelog = (productId?: string): void => {
+    setChangelogProduct(productId)
+    setView('updates')
+  }
 
   return (
     <div className="app">
       <Sidebar active={view} onChange={setView} />
       <main className="main">
         <Suspense fallback={<div className="empty"><span className="spin" />Laden …</div>}>
-          {view === 'overview' && <Overview onNavigate={setView} />}
-          {view === 'updates' && <Updates />}
+          {view === 'overview' && <Overview onNavigate={openChangelog} />}
+          {view === 'store' && <Store onChangelog={openChangelog} />}
+          {view === 'updates' && <Updates productId={changelogProduct} />}
           {view === 'settings' && <Settings />}
         </Suspense>
       </main>

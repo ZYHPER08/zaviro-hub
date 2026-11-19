@@ -3,11 +3,20 @@ import type { UpdateInfo } from '@shared/types'
 import { useApp } from '../context'
 import { t } from '../lib/i18n'
 
-export default function Updates(): JSX.Element {
+interface Props {
+  productId?: string
+}
+
+export default function Updates({ productId }: Props): JSX.Element {
   const { status, notify } = useApp()
   const [info, setInfo] = useState<UpdateInfo | null>(null)
   const [busy, setBusy] = useState(false)
   const [expanded, setExpanded] = useState<Record<string, boolean>>({})
+
+  // Wenn ein Produkt aus dem Store kommt, dessen Changelog direkt aufklappen.
+  useEffect(() => {
+    if (productId) setExpanded((prev) => ({ ...prev, [productId]: true }))
+  }, [productId])
 
   useEffect(() => {
     const offAvailable = window.api.update.onAvailable((value) => setInfo(value))

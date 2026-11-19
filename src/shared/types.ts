@@ -22,6 +22,12 @@ export interface ChangelogEntry {
 /** Status eines Produkts in der Katalog-Definition (statisch, im Code hinterlegt). */
 export type ProductState = 'released' | 'in-development' | 'planned'
 
+/** Store-Kategorie eines Produkts (für Filter und Sortierung). */
+export type ProductCategory = 'system' | 'gaming' | 'server' | 'bot' | 'hub'
+
+/** Store-Badge, das auf einer Produktkarte hervorgehoben wird. */
+export type ProductBadge = 'neu' | 'beliebt' | 'empfohlen'
+
 export interface ProductDefinition {
   id: string
   name: string
@@ -43,6 +49,14 @@ export interface ProductDefinition {
   self?: boolean
   features: string[]
   changelog: ChangelogEntry[]
+  /** Kategorie im Store. */
+  category?: ProductCategory
+  /** Hervorhebungs-Badge im Store. */
+  badge?: ProductBadge
+  /** Pfad zum Screenshot im Renderer-Assets-Ordner. */
+  screenshot?: string
+  /** Freie Schlagwörter für die Store-Suche. */
+  tags?: string[]
 }
 
 export interface ProductRuntime {
